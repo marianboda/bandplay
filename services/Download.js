@@ -4,9 +4,10 @@ var progress = require('progress-stream')
 var fs = require('fs')
 var filesize = require('filesize')
 var mkdirp = require('mkdirp')
+var Path = require('path')
 
 var download= function(url, path, cb, progressHandler) {
-  mkdirp(path, (err) => {
+  mkdirp(Path.dirname(path), (err) => {
     let size = 0
     var stream = fs.createWriteStream(path)
     var prog = progress({time:1000}, progressHandler)
