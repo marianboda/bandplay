@@ -9,10 +9,11 @@
   "author": "Marian Boda",
   "license": "ISC",
   "dependencies": {
+    "async": "^1.4.2",
     "filesize": "^3.1.3",
+    "mkdirp": "^0.5.1",
     "progress-stream": "^1.1.1",
     "request": "^2.65.0",
-    "superagent": "^1.4.0",
-    "x-ray": "^2.0.2"
+    "superagent": "^1.4.0"
   }
 }
