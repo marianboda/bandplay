@@ -1,0 +1,17 @@
+{
+    "env": {
+      "node": true
+    },
+    "ecmaFeatures": {
+        "blockBindings": true,
+        "forOf": true,
+        "jsx": true,
+        "arrowFunctions": true,
+    },
+    "rules": {
+        "semi": 0,
+        "no-unused-vars": 0,
+        "quotes": 0,
+        "curly": 0
+    }
+}
