@@ -11,8 +11,6 @@ var Bandcamp = require('./services/Bandcamp')
 var Download = require('./services/Download')
 var Tag = require('./services/Tag')
 
-
-
 var albumUrl  = process.argv[2]
 if (!albumUrl) {
   console.log('No URL passed')
@@ -75,9 +73,11 @@ var getAlbum = function(url, cb) {
 var q = async.queue((task, cb) => {
   console.log('DOWNLOADING', task.title)
   downloadTrack(task.track, task.album, task.path, (err) => {
+    if (err) console.error(err)
+    console.log(task.track.track_num + ' done')
     cb()
   })
-}, 6)
+}, 4)
 
 mkdirp(DOWNLOAD_ROOT, (err) => {
   getAlbum(albumUrl)

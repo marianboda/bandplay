@@ -26,8 +26,13 @@ var parseInfo = function (body) {
 var parseJSObject = function(body, name) {
   let regex = new RegExp('var ' + name + ' = ({(.|\\s)*?)};','gmi')
   let match = regex.exec(body)
-  let res = match[0].replace(/\/\/ .*\n/g, '').replace('var ' + name + ' = ', '')
-  .replace(/^\s+([a-z_A-Z]+)\s?:/gm, '"$1":').replace('" + "', '').replace(/;$/, '')
+  let res = match[0]
+    .replace(/\/\/ .*\n/g, '')
+    .replace('var ' + name + ' = ', '')
+    .replace(/^\s+([a-z_A-Z]+)\s?:/gm, '"$1":')
+    .replace('" + "', '')
+    .replace(/;$/, '')
+    .replace(/\s+id:/g, ' "id":')
   // console.log('----------\n')
   // console.log(res)
   // console.log('----------\n')
