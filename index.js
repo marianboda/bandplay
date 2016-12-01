@@ -58,7 +58,9 @@ var getAlbum = function(url, cb) {
     console.log(albumDir)
     let dirName = Path.join(DOWNLOAD_ROOT, albumDir)
 
-    Download(album.data.artFullsizeUrl, Path.join(dirName, 'cover.jpg'), (err) => {
+    const coverUrl = album['og:image']
+
+    Download(coverUrl, Path.join(dirName, 'cover.jpg'), (err) => {
       for (let track of album.data.trackinfo) {
         let filename = sanitizeFilename(`${zeroPad(track.track_num,2)} ${track.title}`)+'.mp3'
         console.log(track.track_num + '. ' + track.title)
