@@ -23,7 +23,7 @@ var zeroPad = function(number, digits) {
 }
 
 var downloadTrack = function(track, album, path, cb) {
-  let trackUrl = 'https:' + track.file['mp3-128']
+  let trackUrl = track.file['mp3-128']
   let meta = {
     artist: album.data.artist,
     title: track.title,
