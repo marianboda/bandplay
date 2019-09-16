@@ -11,6 +11,7 @@
   "dependencies": {
     "async": "^1.5.0",
     "filesize": "^3.1.4",
+    "fold-to-ascii": "^5.0.0",
     "id3-writer": "^1.2.2",
     "mkdirp": "^0.5.1",
     "progress-stream": "^1.1.1",

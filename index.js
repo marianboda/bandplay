@@ -10,9 +10,10 @@ var sanitizeFilename = require('sanitize-filename')
 var Bandcamp = require('./services/Bandcamp')
 var Download = require('./services/Download')
 var Tag = require('./services/Tag')
+var ASCIIFolder = require('fold-to-ascii')
 
 function removeAccents(str) {
-  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  return ASCIIFolder.foldReplacing(str);
 }
 
 var albumUrl  = process.argv[2]
