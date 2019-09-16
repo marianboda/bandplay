@@ -11,6 +11,10 @@ var Bandcamp = require('./services/Bandcamp')
 var Download = require('./services/Download')
 var Tag = require('./services/Tag')
 
+function removeAccents(str) {
+  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
 var albumUrl  = process.argv[2]
 if (!albumUrl) {
   console.log('No URL passed')
@@ -54,7 +58,7 @@ var getAlbum = function(url, cb) {
     let albumTitle = album.data.current.title
     let albumYear = new Date(album.data.album_release_date).getFullYear()
 
-    let albumDir = `${artist} - [${albumYear}] ${albumTitle}`
+    let albumDir = removeAccents(`${artist} - [${albumYear}] ${albumTitle}`)
     console.log(albumDir)
     let dirName = Path.join(DOWNLOAD_ROOT, albumDir)
 
@@ -62,7 +66,7 @@ var getAlbum = function(url, cb) {
 
     Download(coverUrl, Path.join(dirName, 'cover.jpg'), (err) => {
       for (let track of album.data.trackinfo) {
-        let filename = sanitizeFilename(`${zeroPad(track.track_num,2)} ${track.title}`)+'.mp3'
+        let filename = sanitizeFilename(`${zeroPad(track.track_num,2)} ${removeAccents(track.title)}`)+'.mp3'
         console.log(track.track_num + '. ' + track.title)
         if (track.file)
           q.push({track: track, album: album, path: Path.join(dirName, filename), title: track.track_num + '. ' + track.title})
