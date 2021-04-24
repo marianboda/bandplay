@@ -54,7 +54,8 @@ var downloadTrack = function(track, album, path, cb) {
 var getAlbum = function(url, cb) {
   request(albumUrl, (err, res, body) => {
     if (err) return null
-    let album = Object.assign(Bandcamp.parseInfo(body), {data: Bandcamp.parseData(body)})
+    const {vars, data} = Bandcamp.parseData(body)
+    let album = Object.assign(Bandcamp.parseInfo(body), {data, vars})
     let artist = album.data.artist
     let albumTitle = album.data.current.title
     let albumYear = new Date(album.data.album_release_date).getFullYear()
@@ -84,7 +85,7 @@ var q = async.queue((task, cb) => {
     console.log(task.track.track_num + ' done')
     cb()
   })
-}, 4)
+}, 1)
 
 mkdirp(DOWNLOAD_ROOT, (err) => {
   getAlbum(albumUrl)

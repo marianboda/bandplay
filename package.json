@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "async": "^1.5.0",
+    "cheerio": "^1.0.0-rc.6",
     "filesize": "^3.1.4",
     "fold-to-ascii": "^5.0.0",
     "id3-writer": "^1.2.2",

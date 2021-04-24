@@ -6,7 +6,7 @@ var filesize = require('filesize')
 var mkdirp = require('mkdirp')
 var Path = require('path')
 
-var download= function(url, path, cb, progressHandler) {
+var download = function(url, path, cb, progressHandler) {
   if (!url)
     return cb('error', null)
 

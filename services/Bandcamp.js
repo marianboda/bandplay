@@ -1,5 +1,7 @@
 'use strict'
 
+var cheerio = require("cheerio")
+
 var parseInfo = function (body) {
   let regex = /<meta\b[^>]*>/gi
   let matches = body.match(regex)
@@ -23,24 +25,13 @@ var parseInfo = function (body) {
   return info
 }
 
-var parseJSObject = function(body, name) {
-  let regex = new RegExp('var ' + name + ' = ({(.|\\s)*?)};','gmi')
-  let match = regex.exec(body)
-  let res = match[0]
-    .replace(/\/\/ .*\n/g, '')
-    .replace('var ' + name + ' = ', '')
-    .replace(/^\s+([a-z_A-Z]+)\s?:/gm, '"$1":')
-    .replace('" + "', '')
-    .replace(/;$/, '')
-    .replace(/\s+id:/g, ' "id":')
-  // console.log('----------\n')
-  // console.log(res)
-  // console.log('----------\n')
-  return JSON.parse(res)
-}
-
 var parseData = function(body) {
-  return parseJSObject(body, 'TralbumData')
+  const $ = cheerio.load(body)
+  return Object.values($('script')).reduce((acc, el) => ({
+    ...acc,
+    ...(el.attribs?.['data-vars'] ? { "vars": JSON.parse(el.attribs['data-vars']) } : {}),
+    ...(el.attribs?.['data-tralbum'] ? { "data": JSON.parse(el.attribs['data-tralbum']) } : {}),
+  }), {})
 }
 
 module.exports = {
